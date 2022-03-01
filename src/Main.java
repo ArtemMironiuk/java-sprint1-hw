@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -6,12 +7,38 @@ public class Main {
         // Поехали!
         Scanner scanner = new Scanner(System.in);
 
+        StepTracker stepTracker = new StepTracker();
+
+        HashMap<String, Integer[]> map = new HashMap<>();
+        Integer[] numberStepsDay = new Integer[30];
+        map.put("Январь", numberStepsDay);
+        map.put("Февраль", numberStepsDay);
+        map.put("Март", numberStepsDay);
+        map.put("Апрель", numberStepsDay);
+        map.put("Май", numberStepsDay);
+        map.put("Июнь", numberStepsDay);
+        map.put("Июль", numberStepsDay);
+        map.put("Август", numberStepsDay);
+        map.put("Сентябрь", numberStepsDay);
+        map.put("Октябрь",numberStepsDay );
+        map.put("Ноябрь", numberStepsDay);
+        map.put("Декабрь", numberStepsDay);
+
+//        for (int i = 0; i < numberStepsDay.length; i++) {
+//            numberStepsDay[i] = numberSteps;
+//        }
+
 
         while (true) {
             printMenu();
             int command = scanner.nextInt();
 
             if (command == 1){
+                System.out.println("Введите месяц");
+                String month = scanner.next();
+                System.out.println("Введите количество шагов за день");
+                int numberSteps = scanner.nextInt();
+                stepTracker.saveNumberSteps(month,numberSteps);
 
 
             } else if (command == 2){
