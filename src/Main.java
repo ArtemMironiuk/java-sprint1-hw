@@ -5,13 +5,13 @@ public class Main {
     public static void main(String[] args) {
         // Поехали!
         Scanner scanner = new Scanner(System.in);
-        printMenu();
-        int userInput = scanner.nextInt();
+        int userInput;
 
         StepTracker stepTracker = new StepTracker();
+        Converter converter = new Converter(stepTracker);
 
 
-        while (userInput != 0) {
+        while (true) {
             printMenu();
             userInput = scanner.nextInt();
 
@@ -33,7 +33,7 @@ public class Main {
             } else if (userInput == 3) {
                 System.out.println("Введите цель по количеству шагов в день:");
                 int targetNumberSteps = scanner.nextInt();
-                stepTracker.задатьКоличествоШагов(targetNumberSteps);
+                stepTracker.setNumberSteps(targetNumberSteps);
 
 
             } else if (userInput == 4) {

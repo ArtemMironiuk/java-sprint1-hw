@@ -1,8 +1,8 @@
 public class MonthData {
-    Integer[] stepsNumberOfDay;
+    int [] stepsNumberOfDay;
 
     public MonthData() {
-        stepsNumberOfDay = new Integer[30];
+        stepsNumberOfDay = new int[30];
 
     }
 

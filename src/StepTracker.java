@@ -2,23 +2,26 @@ import java.util.HashMap;
 
 public class StepTracker {
 
-   private int targetSteps;
-//   private HashMap<Integer, int[]> monthToData = new HashMap<>();
-    private HashMap<Integer, MonthData> monthToData = new HashMap<Integer, MonthData>();
+   private int targetSteps = 10000;
+   private HashMap<Integer, MonthData> monthToData = new HashMap<Integer, MonthData>();
 
-    public StepTracker(){
-        for (int i = 0; i < 12; i++) {
-            monthToData.put(i, new MonthData());
-        }
-    }
+//    public StepTracker(){
+//        for (int i = 0; i < 12; i++) {
+//            monthToData.put(i, new MonthData());
+//        }
+//    }
 
     /**
      * Сохраняет цель
      * @param targetNumberSteps
      */
-    public void задатьКоличествоШагов(int targetNumberSteps) {
-        System.out.println("Сохранили количество шагов " + targetNumberSteps);
-        targetSteps = targetNumberSteps;
+    public void setNumberSteps(int targetNumberSteps) {
+            if (targetNumberSteps < 0) {
+                System.out.println("Невозможно ввести отрицательное количество шагов!");
+            } else if (targetSteps != targetNumberSteps) {
+                targetSteps = targetNumberSteps;
+                System.out.println("Сохранили количество шагов: " + targetNumberSteps);
+            }
     }
 
     /**
