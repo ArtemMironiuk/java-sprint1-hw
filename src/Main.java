@@ -27,7 +27,7 @@ public class Main {
 
             } else if (userInput == 2){
                 System.out.println("Введите месяц за который хотите посмотреть статистику:");
-                String month = scanner.next();
+                int month = scanner.nextInt();
                 stepTracker.printStatisticsMonth(month);
 
             } else if (userInput == 3) {

@@ -28,8 +28,18 @@ public class StepTracker {
      * Вывод статистики за месяц
      * @param month
      */
-    public void printStatisticsMonth(String month) {
+    public void printStatisticsMonth(int month) {
         System.out.println("Вывод статистики за месяц");
+        if(monthToData.containsKey(month)) {
+            for (Integer monthM : monthToData.keySet()) {
+                //MonthData value = monthToData.get(monthM);
+                System.out.println(monthM);
+                for (int i = 0; i < 30; i++) {
+
+                    System.out.println((i + 1) + " день: " + monthToData);
+                }
+            }
+        }
     }
 
     /**
