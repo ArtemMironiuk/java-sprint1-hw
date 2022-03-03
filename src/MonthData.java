@@ -6,8 +6,17 @@ public class MonthData {
 
     }
 
-    void monthData(int dayNumber, int numberSteps) {
+    public void setMonthData(int dayNumber, int numberSteps) {
             stepsNumberOfDay[dayNumber - 1] = numberSteps;
+        //for (int i = 0; i < stepsNumberOfDay.length; i++) {
+            //System.out.print(stepsNumberOfDay[i] + " ; ");
+        //}
+    }
+
+    public int getMonthData(int dayNumber) {
+        int numberSteps = stepsNumberOfDay[dayNumber -1];
+
+        return numberSteps;
     }
 
 }

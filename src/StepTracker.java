@@ -1,15 +1,17 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class StepTracker {
 
-   private int targetSteps = 10000;
-   private HashMap<Integer, MonthData> monthToData = new HashMap<Integer, MonthData>();
+   private int targetSteps = 10000;    //Целевое кол-во шагов по умолчанию
+   private HashMap<Integer, MonthData> monthToData = new HashMap<>();
+   //MonthData monthData = new MonthData();
 
-//    public StepTracker(){
-//        for (int i = 0; i < 12; i++) {
-//            monthToData.put(i, new MonthData());
-//        }
-//    }
+    public StepTracker(){
+        for (int i = 0; i < 12; i++) {
+            monthToData.put(i, new MonthData());
+        }
+    }
 
     /**
      * Сохраняет цель
@@ -31,12 +33,12 @@ public class StepTracker {
     public void printStatisticsMonth(int month) {
         System.out.println("Вывод статистики за месяц");
         if(monthToData.containsKey(month)) {
-            for (Integer monthM : monthToData.keySet()) {
-                //MonthData value = monthToData.get(monthM);
-                System.out.println(monthM);
+            for (Map.Entry<Integer,MonthData> map:monthToData.entrySet()) {
+                //MonthData value = map.getValue();
                 for (int i = 0; i < 30; i++) {
-
-                    System.out.println((i + 1) + " день: " + monthToData);
+                    MonthData value = map.getValue();
+                    int v = value.getMonthData(i+1);
+                    System.out.print((i+1) + " день: " + v );
                 }
             }
         }
@@ -52,11 +54,7 @@ public class StepTracker {
     public void saveNumberSteps(int monthNumber,int dayNumber, int numberSteps) {
         System.out.println("Сохранили шаги " + numberSteps);
         MonthData stepsOfMonth = monthToData.get(monthNumber);
-        if (stepsOfMonth == null){
-            stepsOfMonth = new MonthData();
-            monthToData.put(monthNumber, stepsOfMonth);
-        }
-        stepsOfMonth.monthData(dayNumber,numberSteps);
+        stepsOfMonth.setMonthData(dayNumber,numberSteps);
     }
 //    int saveNumberSteps(String month, Integer numberSteps,int dayNumber){
 //        if (map.containsKey(month)){
