@@ -3,9 +3,11 @@ import java.util.Map;
 
 public class StepTracker {
 
-   private int targetSteps = 10000;    //Целевое кол-во шагов по умолчанию
+   public int targetSteps = 10000;           //Целевое кол-во шагов по умолчанию
+   public int totalNumberStepsOfMonth = 0;    //Общее количество шагов за месяц
    private HashMap<Integer, MonthData> monthToData = new HashMap<>();
-   //MonthData monthData = new MonthData();
+   Converter converter = new Converter(totalNumberStepsOfMonth);
+
 
     public StepTracker(){
         for (int i = 0; i < 12; i++) {
@@ -33,14 +35,31 @@ public class StepTracker {
     public void printStatisticsMonth(int month) {
         System.out.println("Вывод статистики за месяц");
         if(monthToData.containsKey(month)) {
-            for (Map.Entry<Integer,MonthData> map:monthToData.entrySet()) {
-                //MonthData value = map.getValue();
-                for (int i = 0; i < 30; i++) {
-                    MonthData value = map.getValue();
-                    int v = value.getMonthData(i+1);
-                    System.out.print((i+1) + " день: " + v );
+            int maxSteps = 0;
+            int day = 0;
+            MonthData steps = monthToData.get(month);
+            for (int i = 0; i < 30; i++) {
+                int v = steps.getMonthData(i+1);
+                System.out.print((i+1) + " день: " + v + ", " );
+
+                totalNumberStepsOfMonth += v;
+
+                if(maxSteps< v){
+                    maxSteps = v;
                 }
+                if(v >= targetSteps){
+                    day++;
+                }
+
             }
+            System.out.println("Общее количество шагов: " + totalNumberStepsOfMonth);
+            System.out.println("Максимальное пройденное количество шагов в месяце: " + maxSteps);
+            System.out.println("Среднее количество шагов: " + totalNumberStepsOfMonth/30);
+            System.out.println("Пройденная дистанция (в км): " + converter.calculationDistance(totalNumberStepsOfMonth));
+            System.out.println("Количество сожжённых килокалорий: " + converter.caloriesBurned(totalNumberStepsOfMonth));
+            System.out.println("Лучшая серия: " + day);
+
+
         }
     }
 
