@@ -6,17 +6,22 @@ public class MonthData {
 
     }
 
+    /**
+     * Заполнение массива шагов
+     * @param dayNumber
+     * @param numberSteps
+     */
     public void setMonthData(int dayNumber, int numberSteps) {
             stepsNumberOfDay[dayNumber - 1] = numberSteps;
-        //for (int i = 0; i < stepsNumberOfDay.length; i++) {
-            //System.out.print(stepsNumberOfDay[i] + " ; ");
-        //}
     }
 
+    /**
+     * Получение значение по определенному дню
+     * @param dayNumber
+     * @return
+     */
     public int getMonthData(int dayNumber) {
-        int numberSteps = stepsNumberOfDay[dayNumber -1];
-
-        return numberSteps;
+        return stepsNumberOfDay[dayNumber];
     }
 
 }
