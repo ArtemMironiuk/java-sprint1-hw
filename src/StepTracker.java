@@ -3,8 +3,6 @@ import java.util.HashMap;
 public class StepTracker {
 
     private int targetSteps = 10000;                  //Целевое кол-во шагов по умолчанию
-    public int maxSteps = 0;                         //Максимальное количество шагов в месяц за день
-    public int dayD = 0;                             //Серия из дней
 
     private final HashMap<Integer, MonthData> monthToData = new HashMap<>();
     Converter converter = new Converter();
@@ -36,34 +34,27 @@ public class StepTracker {
     public void printStatisticsMonth(int month) {
         System.out.println("Вывод статистики за месяц");
         if(monthToData.containsKey(month)) {
-            int day = 0;
             MonthData steps = monthToData.get(month);
             for (int i = 0; i < steps.stepsNumberOfDay.length; i++) {
-                int v = steps.getMonthData(i);
+                int step = steps.getMonthData(i);
                 if(i != steps.stepsNumberOfDay.length -1){
-                    System.out.print((i+1) + " день: " + v + ", " );
+                    System.out.print((i+1) + " день: " + step + ", " );
                 }else {
-                    System.out.print((i+1) + " день: " + v);
+                    System.out.print((i+1) + " день: " + step);
                 }
-
-                if(v >= targetSteps){                         //Условие для подсчета лучшей серии дней
-                    day++;
-                }
-                else{
-                    if(dayD < day){
-                        dayD = day;
-                        day = 0;
-                    }
-                }
-
             }
 
         }
     }
 
-    public int countStepOfMonth(int month) {
+    /**
+     * Метод возвращает общее количество шагов за месяц
+     * @param month
+     * @return
+     */
+    public int getCountStepOfMonth(int month) {
         int totalNumberStepsOfMonth = 0;
-        MonthData steps = monthToData.get(month);            //как то зайти в массив
+        MonthData steps = monthToData.get(month);
         for (int i = 0; i < steps.stepsNumberOfDay.length; i++) {
             int step = steps.getMonthData(i);
             totalNumberStepsOfMonth += step;
@@ -71,13 +62,14 @@ public class StepTracker {
         return totalNumberStepsOfMonth;
     }
 
-    public double averageStep(int month) {
-        return (double)  countStepOfMonth(month)/ 30;
-    }
-
-    public int maxNumberStep(int month) {
+    /**
+     * Метод возвращает максимальное количество шагов в месяц
+     * @param month
+     * @return
+     */
+    public int getMaxNumberStep(int month) {
         int maxSteps = 0;
-        MonthData steps = monthToData.get(month);           //как то зайти в массив
+        MonthData steps = monthToData.get(month);
         for (int i = 0; i < steps.stepsNumberOfDay.length; i++) {
             int step = steps.getMonthData(i);
             if (maxSteps < step) {                               //Условие для нахождения максимального количества шагов
@@ -85,6 +77,59 @@ public class StepTracker {
             }
         }
         return maxSteps;
+    }
+
+    /**
+     * Метод возвращает среднее количество шагов за день
+     * @param month
+     * @return
+     */
+    public double getAverageStep(int month) {
+        return (double)  getCountStepOfMonth(month)/ 30;
+    }
+
+    /**
+     * Возвращает пройденную дистанцию
+     * @param month
+     * @return
+     */
+    public double getCalculationDistance(int month){
+
+        return converter.calculationDistance(getCountStepOfMonth(month));
+    }
+
+    /**
+     * Возвращает количество сожженных калорий
+     * @param month
+     * @return
+     */
+    public double getCaloriesBurned(int month){
+        return converter.caloriesBurned(getCountStepOfMonth(month));
+    }
+
+    /**
+     * Возвращает лучшую серию: максимальное количество
+     * подряд идущих дней, в течение которых количество
+     * шагов за день было равно или выше целевого.
+     * @param month
+     * @return
+     */
+    public int getBestSeries(int month) {
+        int day = 0;
+        int dayD = 0;
+        MonthData steps = monthToData.get(month);
+        for (int i = 0; i < steps.stepsNumberOfDay.length; i++) {
+            int step = steps.getMonthData(i);
+            if (step >= targetSteps) {                         //Условие для подсчета лучшей серии дней
+                day++;
+            } else {
+                if (dayD < day) {
+                    dayD = day;
+                    day = 0;
+                }
+            }
+        }
+        return dayD;
     }
 
 
