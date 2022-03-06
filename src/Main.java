@@ -9,7 +9,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         printMenu();
-        while(!scanner.hasNextInt()){
+        while(!scanner.hasNextInt()){                              //Проверка ввода на число в первой итерации
             scanner.next();
             System.out.println("Неверный формат команды!");
             printMenu();
@@ -48,7 +48,7 @@ public class Main {
 
                 }
                 printMenu();
-                while(!scanner.hasNextInt()){
+                while(!scanner.hasNextInt()){                              //Проверка ввода на число в цикле
                     scanner.next();
                     System.out.println("Неверный формат команды!");
                     printMenu();
@@ -60,6 +60,9 @@ public class Main {
 
     }
 
+    /**
+     * Вывод меню команд
+     */
     public static void printMenu() {
         System.out.println("Что вы хотите сделать? ");
         System.out.println("1 - Ввести количество шагов за определённый день");
