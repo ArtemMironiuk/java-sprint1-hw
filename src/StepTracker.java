@@ -1,14 +1,15 @@
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class StepTracker {
 
-    private int targetSteps = 10000;                  //Целевое кол-во шагов по умолчанию
+    private int targetSteps = 10000; //Целевое кол-во шагов по умолчанию
 
     private final HashMap<Integer, MonthData> monthToData = new HashMap<>();
     Converter converter = new Converter();
+    Scanner scanner = new Scanner(System.in);
 
-
-    public StepTracker(){
+    public StepTracker() {
         for (int i = 0; i < 12; i++) {
             monthToData.put(i, new MonthData());
         }
@@ -17,34 +18,43 @@ public class StepTracker {
     /**
      * Сохраняет количество шагов за день.
      * Предполагаем в каждом месяце 30 дней.
-     * @param monthNumber
-     * @param numberSteps
-     * @param dayNumber
      */
-    public void saveNumberSteps(int monthNumber,int dayNumber, int numberSteps) {
+    public void saveNumberSteps() {
+        System.out.println("Введите номер месяца:");
+        int monthNumber = scanner.nextInt();
+        System.out.println("Введите номер дня, от 1 до 30:");
+        int dayNumber = scanner.nextInt();
+        System.out.println("Введите количество шагов за день:");
+        int numberSteps = scanner.nextInt();
         System.out.println("Сохранили шаги " + numberSteps);
         MonthData stepsOfMonth = monthToData.get(monthNumber);
-        stepsOfMonth.setMonthData(dayNumber,numberSteps);
+        stepsOfMonth.setMonthData(dayNumber, numberSteps);
     }
 
     /**
      * Вывод статистики за месяц
-     * @param month
      */
-    public void printStatisticsMonth(int month) {
+    public void printStatisticsMonth() {
+        System.out.println("Введите месяц за который хотите посмотреть статистику:");
+        int month = scanner.nextInt();
         System.out.println("Вывод статистики за месяц");
-        if(monthToData.containsKey(month)) {
+        if (monthToData.containsKey(month)) {
             MonthData steps = monthToData.get(month);
             for (int i = 0; i < steps.stepsNumberOfDay.length; i++) {
                 int step = steps.getMonthData(i);
-                if(i != steps.stepsNumberOfDay.length -1){
-                    System.out.print((i+1) + " день: " + step + ", " );
-                }else {
-                    System.out.print((i+1) + " день: " + step);
+                if (i != steps.stepsNumberOfDay.length - 1) {
+                    System.out.print((i + 1) + " день: " + step + ", ");
+                } else {
+                    System.out.print((i + 1) + " день: " + step);
                 }
             }
-
         }
+        System.out.println("\nОбщее количество шагов: " + getCountStepOfMonth(month));
+        System.out.println("Максимальное пройденное количество шагов в месяце: " + getMaxNumberStep(month));
+        System.out.println("Среднее количество шагов: " + getAverageStep(month));
+        System.out.println("Пройденная дистанция (в км): " + getCalculationDistance(month));
+        System.out.println("Количество сожжённых килокалорий: " + getCaloriesBurned(month));
+        System.out.println("Лучшая серия: " + getBestSeries(month));
     }
 
     /**
@@ -59,6 +69,7 @@ public class StepTracker {
             int step = steps.getMonthData(i);
             totalNumberStepsOfMonth += step;
         }
+
         return totalNumberStepsOfMonth;
     }
 
@@ -72,7 +83,7 @@ public class StepTracker {
         MonthData steps = monthToData.get(month);
         for (int i = 0; i < steps.stepsNumberOfDay.length; i++) {
             int step = steps.getMonthData(i);
-            if (maxSteps < step) {                               //Условие для нахождения максимального количества шагов
+            if (maxSteps < step) { //Условие для нахождения максимального количества шагов
                 maxSteps = step;
             }
         }
@@ -85,7 +96,7 @@ public class StepTracker {
      * @return
      */
     public double getAverageStep(int month) {
-        return (double)  getCountStepOfMonth(month)/ 30;
+        return (double) getCountStepOfMonth(month) / 30;
     }
 
     /**
@@ -93,8 +104,7 @@ public class StepTracker {
      * @param month
      * @return
      */
-    public double getCalculationDistance(int month){
-
+    public double getCalculationDistance(int month) {
         return converter.calculationDistance(getCountStepOfMonth(month));
     }
 
@@ -103,7 +113,7 @@ public class StepTracker {
      * @param month
      * @return
      */
-    public double getCaloriesBurned(int month){
+    public double getCaloriesBurned(int month) {
         return converter.caloriesBurned(getCountStepOfMonth(month));
     }
 
@@ -120,7 +130,7 @@ public class StepTracker {
         MonthData steps = monthToData.get(month);
         for (int i = 0; i < steps.stepsNumberOfDay.length; i++) {
             int step = steps.getMonthData(i);
-            if (step >= targetSteps) {                         //Условие для подсчета лучшей серии дней
+            if (step >= targetSteps) { //Условие для подсчета лучшей серии дней
                 day++;
             } else {
                 if (dayD < day) {
@@ -135,14 +145,15 @@ public class StepTracker {
 
     /**
      * Сохраняет цель
-     * @param targetNumberSteps
      */
-    public void setNumberSteps(int targetNumberSteps) {
-            if (targetNumberSteps < 0) {
-                System.out.println("Невозможно ввести отрицательное количество шагов!");
-            } else {
-                this.targetSteps = targetNumberSteps;
-                System.out.println("Сохранили количество шагов: " + this.targetSteps);
-            }
+    public void setNumberSteps() {
+        System.out.println("Введите цель по количеству шагов в день:");
+        int targetNumberSteps = scanner.nextInt();
+        if (targetNumberSteps < 0) {
+            System.out.println("Невозможно ввести отрицательное количество шагов!");
+        } else {
+            this.targetSteps = targetNumberSteps;
+            System.out.println("Сохранили количество шагов: " + this.targetSteps);
+        }
     }
 }

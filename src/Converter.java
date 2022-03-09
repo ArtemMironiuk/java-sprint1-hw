@@ -1,13 +1,15 @@
 public class Converter {
+    double lengthStep = 0.75 / 1000; //для удобства, переменная сразу переведена в километры
+    double kKal = 50 / 1000; //для удобства, переменная сразу переведена в килокалории
 
     /**
      * Вычисление пройденной дистанции за месяц в километрах
-     * 1 шаг = 75 см
+     * по ТЗ 1 шаг = 75 см
      * @param steps
      * @return
      */
-    public double calculationDistance(int steps){
-        return steps * 0.75 / 1000;
+    public double calculationDistance(int steps) {
+        return steps * lengthStep;
     }
 
     /**
@@ -17,7 +19,7 @@ public class Converter {
      * @param steps
      * @return
      */
-    public double caloriesBurned(int steps){
-        return steps * 50 / 1000;
+    public double caloriesBurned(int steps) {
+        return steps * kKal;
     }
 }

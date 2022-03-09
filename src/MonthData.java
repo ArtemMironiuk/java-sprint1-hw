@@ -1,9 +1,8 @@
 public class MonthData {
-    int [] stepsNumberOfDay;
+    int[] stepsNumberOfDay;
 
     public MonthData() {
         stepsNumberOfDay = new int[30];
-
     }
 
     /**
@@ -12,7 +11,7 @@ public class MonthData {
      * @param numberSteps
      */
     public void setMonthData(int dayNumber, int numberSteps) {
-            stepsNumberOfDay[dayNumber - 1] = numberSteps;
+        stepsNumberOfDay[dayNumber - 1] = numberSteps;
     }
 
     /**
@@ -23,5 +22,4 @@ public class MonthData {
     public int getMonthData(int dayNumber) {
         return stepsNumberOfDay[dayNumber];
     }
-
 }
