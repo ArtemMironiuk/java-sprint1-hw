@@ -7,26 +7,32 @@ public class Main {
         int userInput = 0;
 
         Scanner scanner = new Scanner(System.in);
-        printMenu();
-        while (true) {
+        boolean entry = true;
+        while (entry) {
+            printMenu();
             while (!scanner.hasNextInt()) { //Проверка ввода на число
                 scanner.next();
                 System.out.println("Неверный формат команды!");
                 printMenu();
             }
             userInput = scanner.nextInt();
-            if (userInput == 1) {
-                stepTracker.saveNumberSteps();
-            } else if (userInput == 2) {
-                stepTracker.printStatisticsMonth();
-            } else if (userInput == 3) {
-                stepTracker.setNumberSteps();
-            } else if (userInput == 0) {
-                break;
-            } else {
-                System.out.println("Извините, такой команды пока нет.");
+            switch (userInput) {
+                case 1:
+                    stepTracker.saveNumberSteps();
+                    break;
+                case 2:
+                    stepTracker.printStatisticsMonth();
+                    break;
+                case 3:
+                    stepTracker.setNumberSteps();
+                    break;
+                case 0:
+                    entry = false;
+                    break ;
+                default:
+                    System.out.println("Извините, такой команды пока нет.");
+                    break;
             }
-            printMenu();
         }
         System.out.println("Приложение закрылось.");
     }
